@@ -24,7 +24,7 @@
 > MagicUser Theme
 
 
-### Laser preferences
+## Laser preferences
 
 ![Laser beam plugin](images/laser_beam_settings.png)
 
