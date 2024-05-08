@@ -60,3 +60,5 @@ Have suggestions for new features, usability improvements, or found a bug? Your 
 Laser beam plugin for Obsidian
 
 MIT License ⓒ Bernardo Pires
+
+The laser beam (ribbon icon) is from [Lucide](https://lucide.dev/) Icons used by Obsidian. The Lucide icon library is licensed under the ISC License.
