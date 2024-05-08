@@ -1,8 +1,112 @@
-/*
-
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
-
-If your plugin does not need CSS, delete this file.
-
+/* Laser beam plugin for Obsidian
+MIT License (c) Bernardo Pires (@drbap)
 */
+body {
+	--lb-laser-top: 20px;
+	--lb-laser-intensity: 1.5;
+	--lb-laser-area: 82px;
+}
+
+/* Laser */
+body.lb-laser-active.lb-laser-type-line div.workspace-split:not(.mod-right-split, .mod-left-split) .workspace-leaf-content::after {
+	content: '';
+	left: 10px;
+	right: 20px;
+	position: absolute;
+	z-index: 2000;
+	width: auto;
+	height: 2px;
+	box-shadow: 0 0 8px 2px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 22px) 2px var(--lb-laser-color-glow);
+	background-color: var(--lb-laser-color-bg);
+	border-radius: 24px;
+	transform: translateY(var(--lb-laser-top)) scaleY(var(--lb-laser-intensity));
+	opacity: .8;
+	pointer-events: none;
+}
+
+body.lb-laser-active.lb-laser-type-area div.workspace-split:not(.mod-right-split, .mod-left-split) .workspace-leaf-content::after {
+	content: '';
+	left: 10px;
+	right: 20px;
+	position: absolute;
+	z-index: 2000;
+	width: auto;
+	height: var(--lb-laser-area);
+	box-shadow: inset 0 0 10px 1px var(--lb-laser-color-glow), 0 0 4px 1px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 12px) 1px var(--lb-laser-color-glow);
+	border: calc(var(--lb-laser-intensity) * 1px) solid var(--lb-laser-color-bg);
+	background-color: transparent;
+	border-radius: 0;
+	transform: translateY(var(--lb-laser-top));
+	opacity: .8;
+	pointer-events: none;
+}
+
+.theme-dark.lb-laser-green {
+	--lb-laser-color-bg: #80ffaa;
+	--lb-laser-color-glow: #00ff55;
+}
+
+.theme-light.lb-laser-green {
+	--lb-laser-color-bg: #00e84d;
+	--lb-laser-color-glow: #00ff5580;
+}
+
+.theme-dark.lb-laser-blue {
+	--lb-laser-color-bg: #00f1ff;
+	--lb-laser-color-glow: #00a3ff;
+}
+
+.theme-light.lb-laser-blue {
+	--lb-laser-color-bg: #00a3ff;
+	--lb-laser-color-glow: #00a3ff88;
+}
+
+.theme-dark.lb-laser-red {
+	--lb-laser-color-bg: #ff7f7f;
+	--lb-laser-color-glow: #ff0000;
+}
+
+.theme-light.lb-laser-red {
+	--lb-laser-color-bg: #ff0000;
+	--lb-laser-color-glow: #ff000088;
+}
+
+.theme-dark.lb-laser-orange {
+	--lb-laser-color-bg: #ffcf00;
+	--lb-laser-color-glow: #ff7f00;
+}
+
+.theme-light.lb-laser-orange {
+	--lb-laser-color-bg: #ff7f00;
+	--lb-laser-color-glow: #ff7f0088;
+}
+
+.theme-dark.lb-laser-yellow {
+	--lb-laser-color-bg: #ffff00;
+	--lb-laser-color-glow: #e1e100;
+}
+
+.theme-light.lb-laser-yellow {
+	--lb-laser-color-bg: #ffd700;
+	--lb-laser-color-glow: #ffd70088;
+}
+
+.theme-dark.lb-laser-purple {
+	--lb-laser-color-bg: #d88fff;
+	--lb-laser-color-glow: #bf48ff;
+}
+
+.theme-light.lb-laser-purple {
+	--lb-laser-color-bg: #bf48ff;
+	--lb-laser-color-glow: #a300ff88;
+}
+
+.theme-dark.lb-laser-pink {
+	--lb-laser-color-bg: #ff8ce1;
+	--lb-laser-color-glow: #ff48cf;
+}
+
+.theme-light.lb-laser-pink {
+	--lb-laser-color-bg: #ff00cf;
+	--lb-laser-color-glow: #ff48cf88;
+}

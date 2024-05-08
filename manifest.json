@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "laser-beam",
+	"name": "Laser beam",
 	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"minAppVersion": "1.1.0",
+	"description": "Improve your reading experience with customizable laser lines.",
+	"author": "Bernardo Pires",
+	"authorUrl": "https://github.com/drbap",
 	"isDesktopOnly": false
 }
