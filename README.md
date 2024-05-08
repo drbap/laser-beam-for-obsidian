@@ -23,7 +23,7 @@
 - **Themes**: It is designed to work on any theme. Click the Laser ribbon icon to turn the laser line on or off.
 
 ![Laser beam plugin](images/laser_beam_03.png)
-> MagicUser Theme
+> MagicUser theme
 
 
 ## Laser preferences
