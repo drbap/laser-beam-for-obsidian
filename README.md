@@ -3,7 +3,7 @@
 ![Laser beam plugin](images/laser_beam_plugin_intro.png)
 **Laser beam** is a plugin for Obsidian.md designed to enhance your reading experience by utilizing customizable laser lines.  These lines are virtual guides meant to improve reading focus and concentration.
 
-## Overview and Features:
+## Overview and Features
 
 ![Laser beam plugin](images/laser_beam_01.png)
 > Default theme - laser line (blue)
