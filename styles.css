@@ -12,7 +12,7 @@ body.lb-laser-active.lb-laser-type-line div.workspace-split:not(.mod-right-split
 	content: '';
 	left: 10px;
 	right: 20px;
-	position: absolute;
+	position: fixed;
 	z-index: 2000;
 	width: auto;
 	height: 2px;
@@ -22,13 +22,14 @@ body.lb-laser-active.lb-laser-type-line div.workspace-split:not(.mod-right-split
 	transform: translateY(var(--lb-laser-top)) scaleY(var(--lb-laser-intensity));
 	opacity: .8;
 	pointer-events: none;
+	will-change: transform;
 }
 
 body.lb-laser-active.lb-laser-type-area div.workspace-split:not(.mod-right-split, .mod-left-split) .workspace-leaf-content::after {
 	content: '';
 	left: 10px;
 	right: 20px;
-	position: absolute;
+	position: fixed;
 	z-index: 2000;
 	width: auto;
 	height: var(--lb-laser-area);
@@ -39,6 +40,7 @@ body.lb-laser-active.lb-laser-type-area div.workspace-split:not(.mod-right-split
 	transform: translateY(var(--lb-laser-top));
 	opacity: .8;
 	pointer-events: none;
+	will-change: transform;
 }
 
 .theme-dark.lb-laser-green {
