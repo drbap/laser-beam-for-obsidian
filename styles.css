@@ -14,7 +14,6 @@ body.lb-laser-active.lb-laser-type-line div.workspace-split:not(.mod-right-split
 	right: 20px;
 	position: fixed;
 	z-index: 2000;
-	width: auto;
 	height: 2px;
 	box-shadow: 0 0 8px 2px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 22px) 2px var(--lb-laser-color-glow);
 	background-color: var(--lb-laser-color-bg);
@@ -23,6 +22,7 @@ body.lb-laser-active.lb-laser-type-line div.workspace-split:not(.mod-right-split
 	opacity: .8;
 	pointer-events: none;
 	will-change: transform;
+	transition: transform 0.2s;
 }
 
 body.lb-laser-active.lb-laser-type-area div.workspace-split:not(.mod-right-split, .mod-left-split) .workspace-leaf-content::after {
@@ -31,7 +31,6 @@ body.lb-laser-active.lb-laser-type-area div.workspace-split:not(.mod-right-split
 	right: 20px;
 	position: fixed;
 	z-index: 2000;
-	width: auto;
 	height: var(--lb-laser-area);
 	box-shadow: inset 0 0 10px 1px var(--lb-laser-color-glow), 0 0 4px 1px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 12px) 1px var(--lb-laser-color-glow);
 	border: calc(var(--lb-laser-intensity) * 1px) solid var(--lb-laser-color-bg);
@@ -41,6 +40,7 @@ body.lb-laser-active.lb-laser-type-area div.workspace-split:not(.mod-right-split
 	opacity: .8;
 	pointer-events: none;
 	will-change: transform;
+	transition: transform 0.2s;
 }
 
 .theme-dark.lb-laser-green {
