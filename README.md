@@ -40,8 +40,6 @@
 
 ## Command Palette
 
-![Laser beam plugin](images/laser_beam_command_palette.png)
-
 - You can activate/deactivate the laser line using the **Command Palette** or by setting a keyboard **shortcut**. You can also toggle between laser line and laser area (focus type).
 
 I hope this plugin helps to improve your reading focus and performance (daily study and work tasks).
