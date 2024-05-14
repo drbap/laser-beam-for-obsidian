@@ -2,11 +2,11 @@
 MIT License (c) Bernardo Pires (@drbap)
 */
 body {
-	--lb-laser-top: 1200px;
+	--lb-laser-top: 0;
 	--lb-laser-intensity: 1.5;
 	--lb-laser-area: 82px;
-	--lb-laser-margin-left: 0px;
-	--lb-laser-margin-right: 0px;
+	--lb-laser-margin-left: 0;
+	--lb-laser-margin-right: 0;
 }
 
 /* Laser */
@@ -22,7 +22,10 @@ body.lb-laser-active::before {
 	mix-blend-mode: normal;
 	pointer-events: none;
 	will-change: transform;
-	transition: transform opacity 0.2s;
+	transition: transform 0.2s;
+	animation-name: show-laser;
+	animation-duration: 0.2s;
+	animation-iteration-count: 1;
 }
 
 body.lb-laser-active.lb-laser-type-line::before {
@@ -110,4 +113,18 @@ body.lb-laser-active.lb-laser-type-area::before {
 .theme-light.lb-laser-pink {
 	--lb-laser-color-bg: #ff00cf;
 	--lb-laser-color-glow: #ff48cf88;
+}
+
+@keyframes show-laser {
+	from {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	to {
+		opacity: 0.1;
+		width: 50px;
+		height: 20px;
+	}
 }
