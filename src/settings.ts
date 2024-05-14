@@ -7,6 +7,8 @@ export class LaserBeamSettingTab extends PluginSettingTab {
     dropdownLaserType: DropdownComponent;
     dropdownLaserColor: DropdownComponent;
     sliderIntensity: SliderComponent;
+    sliderMarginLeft: SliderComponent;
+    sliderMarginRight: SliderComponent;
     sliderArea: SliderComponent;
 
     constructor(app: App, plugin: LaserBeamPlugin) {
@@ -144,6 +146,68 @@ export class LaserBeamSettingTab extends PluginSettingTab {
                     this.sliderArea.setValue(DEFAULT_SETTINGS.laserArea);
                     this.plugin.settings.laserArea = DEFAULT_SETTINGS.laserArea;
                     this.plugin.setLaserArea(this.plugin.settings.laserArea);
+                    this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName('Left margin')
+            .setDesc('Set laser left margin')
+            .addSlider((sli) => {
+                this.sliderMarginLeft = sli;
+                let slider_val: number;
+                if (this.plugin.settings.laserMarginLeft) {
+                    slider_val = this.plugin.settings.laserMarginLeft;
+                } else {
+                    slider_val = DEFAULT_SETTINGS.laserMarginLeft;
+                }
+                sli.setDynamicTooltip();
+                sli.setLimits(0, 500, 1);
+                sli.setValue(slider_val);
+                sli.onChange((val: number) => {
+
+                    this.plugin.settings.laserMarginLeft = val;
+                    this.plugin.setLaserMargins(val, this.plugin.settings.laserMarginRight);
+                    this.plugin.saveSettings();
+                })
+            }).addExtraButton((btn) => {
+                btn.setIcon("rotate-ccw");
+                btn.setTooltip("Restore default")
+                btn.onClick(() => {
+                    this.sliderMarginLeft.setValue(DEFAULT_SETTINGS.laserMarginLeft);
+                    this.plugin.settings.laserMarginLeft = DEFAULT_SETTINGS.laserMarginLeft;
+                    this.plugin.setLaserMargins(this.plugin.settings.laserMarginLeft, this.plugin.settings.laserMarginRight);
+                    this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName('Right margin')
+            .setDesc('Set laser right margin')
+            .addSlider((sli) => {
+                this.sliderMarginRight = sli;
+                let slider_val: number;
+                if (this.plugin.settings.laserMarginRight) {
+                    slider_val = this.plugin.settings.laserMarginRight;
+                } else {
+                    slider_val = DEFAULT_SETTINGS.laserMarginRight;
+                }
+                sli.setDynamicTooltip();
+                sli.setLimits(0, 500, 1);
+                sli.setValue(slider_val);
+                sli.onChange((val: number) => {
+
+                    this.plugin.settings.laserMarginRight = val;
+                    this.plugin.setLaserMargins(this.plugin.settings.laserMarginLeft, val);
+                    this.plugin.saveSettings();
+                })
+            }).addExtraButton((btn) => {
+                btn.setIcon("rotate-ccw");
+                btn.setTooltip("Restore default")
+                btn.onClick(() => {
+                    this.sliderMarginRight.setValue(DEFAULT_SETTINGS.laserMarginRight);
+                    this.plugin.settings.laserMarginRight = DEFAULT_SETTINGS.laserMarginRight;
+                    this.plugin.setLaserMargins(this.plugin.settings.laserMarginLeft, this.plugin.settings.laserMarginRight);
                     this.plugin.saveSettings();
                 });
             });

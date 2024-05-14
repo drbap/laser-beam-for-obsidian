@@ -7,6 +7,8 @@ interface LaserBeamSettings {
 	isLaserActive: boolean;
 	laserIntensity: number;
 	laserArea: number;
+	laserMarginLeft: number;
+	laserMarginRight: number;
 }
 
 export const DEFAULT_SETTINGS: LaserBeamSettings = {
@@ -14,7 +16,9 @@ export const DEFAULT_SETTINGS: LaserBeamSettings = {
 	laserColor: 'blue',
 	isLaserActive: false,
 	laserIntensity: 1.5,
-	laserArea: 82
+	laserArea: 82,
+	laserMarginLeft: 0,
+	laserMarginRight: 0
 }
 
 export default class LaserBeamPlugin extends Plugin {
@@ -25,7 +29,6 @@ export default class LaserBeamPlugin extends Plugin {
 	async onload() {
 
 		await this.loadSettings();
-
 		this.LB_BODY = document.body;
 		addIcon('wand-1', this.LB_ICON);
 
@@ -91,11 +94,11 @@ export default class LaserBeamPlugin extends Plugin {
 		};
 	}
 
-	toggleLaser(e: MouseEvent) {
+	toggleLaser(evt: MouseEvent) {
 		if (this.settings.isLaserActive) {
 			this.deactivateLaser();
 		} else {
-			this.setLaserPos(e);
+			this.setLaserPos(evt);
 			this.activateLaser();
 		}
 	}
@@ -106,6 +109,7 @@ export default class LaserBeamPlugin extends Plugin {
 		this.setLaserColor(this.settings.laserColor);
 		this.setLaserIntensity(this.settings.laserIntensity);
 		this.setLaserArea(this.settings.laserArea);
+		this.setLaserMargins(this.settings.laserMarginLeft, this.settings.laserMarginRight);
 		this.settings.isLaserActive = true;
 		this.saveSettings();
 	}
@@ -165,9 +169,9 @@ export default class LaserBeamPlugin extends Plugin {
 		let LaserBeamPos;
 
 		if (this.settings.laserType === 'line') {
-			LaserBeamPos = evt.clientY - 20;
+			LaserBeamPos = evt.clientY + 16;
 		} else {
-			LaserBeamPos = evt.clientY - 40 - (this.settings.laserArea / 2);
+			LaserBeamPos = evt.clientY - this.settings.laserArea / 2;
 		}
 
 		this.LB_BODY.style.setProperty('--lb-laser-top', LaserBeamPos.toString() + 'px');
@@ -182,6 +186,15 @@ export default class LaserBeamPlugin extends Plugin {
 	setLaserIntensity(val: number) {
 		if (val >= 0 && val <= 3) {
 			this.LB_BODY.style.setProperty('--lb-laser-intensity', val.toString());
+		}
+	}
+
+	setLaserMargins(val1: number, val2: number) {
+		if (val1 >= 0 && val1 <= 500) {
+			this.LB_BODY.style.setProperty('--lb-laser-margin-left', val1.toString() + 'px');
+		}
+		if (val2 >= 0 && val2 <= 500) {
+			this.LB_BODY.style.setProperty('--lb-laser-margin-right', val2.toString() + 'px');
 		}
 	}
 
