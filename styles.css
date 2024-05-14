@@ -2,45 +2,44 @@
 MIT License (c) Bernardo Pires (@drbap)
 */
 body {
-	--lb-laser-top: 20px;
+	--lb-laser-top: 1200px;
 	--lb-laser-intensity: 1.5;
 	--lb-laser-area: 82px;
+	--lb-laser-margin-left: 0px;
+	--lb-laser-margin-right: 0px;
 }
 
 /* Laser */
-body.lb-laser-active.lb-laser-type-line div.workspace-split:not(.mod-right-split, .mod-left-split) .workspace-leaf-content::after {
+body.lb-laser-active::before {
 	content: '';
-	left: 10px;
-	right: 20px;
+	left: var(--lb-laser-margin-left);
+	right: var(--lb-laser-margin-right);
 	position: fixed;
 	z-index: 2000;
+	opacity: .8;
+	width: auto;
+	height: auto;
+	mix-blend-mode: normal;
+	pointer-events: none;
+	will-change: transform;
+	transition: transform opacity 0.2s;
+}
+
+body.lb-laser-active.lb-laser-type-line::before {
 	height: 2px;
 	box-shadow: 0 0 8px 2px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 22px) 2px var(--lb-laser-color-glow);
 	background-color: var(--lb-laser-color-bg);
 	border-radius: 24px;
 	transform: translateY(var(--lb-laser-top)) scaleY(var(--lb-laser-intensity));
-	opacity: .8;
-	pointer-events: none;
-	will-change: transform;
-	transition: transform 0.2s;
 }
 
-body.lb-laser-active.lb-laser-type-area div.workspace-split:not(.mod-right-split, .mod-left-split) .workspace-leaf-content::after {
-	content: '';
-	left: 10px;
-	right: 20px;
-	position: fixed;
-	z-index: 2000;
+body.lb-laser-active.lb-laser-type-area::before {
 	height: var(--lb-laser-area);
 	box-shadow: inset 0 0 10px 1px var(--lb-laser-color-glow), 0 0 4px 1px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 12px) 1px var(--lb-laser-color-glow);
 	border: calc(var(--lb-laser-intensity) * 1px) solid var(--lb-laser-color-bg);
 	background-color: transparent;
 	border-radius: 0;
 	transform: translateY(var(--lb-laser-top));
-	opacity: .8;
-	pointer-events: none;
-	will-change: transform;
-	transition: transform 0.2s;
 }
 
 .theme-dark.lb-laser-green {

@@ -1,0 +1,9 @@
+{
+  "laserType": "line",
+  "laserColor": "purple",
+  "isLaserActive": false,
+  "laserIntensity": 1.5,
+  "laserArea": 82,
+  "laserMarginLeft": 0,
+  "laserMarginRight": 0
+}

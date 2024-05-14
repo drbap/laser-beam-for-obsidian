@@ -1,6 +1,6 @@
 {
 	"name": "laser-beam",
-	"version": "1.0.2",
+	"version": "2.0.0",
 	"description": "Laser reading lines for Obsidian",
 	"main": "main.js",
 	"scripts": {
