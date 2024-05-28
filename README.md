@@ -46,6 +46,15 @@ I hope this plugin helps to improve your reading focus and performance (daily st
 
 > This plugin is an improved version of the reading laser of **MagicUser theme** for Obsidian.
 
+## Installation
+
+1. Open **Obsidian Settings**.
+2. In the side menu, select **Community plugins**.
+3. Select **Browse** (button).
+4. Search for **Laser beam**.
+5. Select it and choose **Install**.
+6. **Enable** Laser beam after installation.
+
 ## Manually installing the plugin
 
 - Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/laser-beam/`.
