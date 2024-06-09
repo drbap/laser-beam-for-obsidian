@@ -1,4 +1,4 @@
-import { Editor, IconName, MarkdownView, Notice, Plugin, addIcon } from 'obsidian';
+import { Editor, IconName, MarkdownView, Plugin, addIcon } from 'obsidian';
 import { LaserBeamSettingTab } from './settings';
 
 interface LaserBeamSettings {
@@ -38,8 +38,6 @@ export default class LaserBeamPlugin extends Plugin {
 		await this.loadSettings();
 		this.LB_BODY = document.body;
 		addIcon('wand-1', this.LB_ICON);
-
-		new Notice("Version 2.1.0");
 
 		if (this.settings.isLaserActive) {
 			this.activateLaser();
