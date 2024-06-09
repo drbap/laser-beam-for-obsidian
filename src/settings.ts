@@ -6,7 +6,9 @@ export class LaserBeamSettingTab extends PluginSettingTab {
     plugin: LaserBeamPlugin;
     dropdownLaserType: DropdownComponent;
     dropdownLaserColor: DropdownComponent;
+    dropdownLaserMovement: DropdownComponent;
     sliderIntensity: SliderComponent;
+    sliderWidth: SliderComponent;
     sliderMarginLeft: SliderComponent;
     sliderMarginRight: SliderComponent;
     sliderArea: SliderComponent;
@@ -33,7 +35,33 @@ export class LaserBeamSettingTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Laser focus type')
+            .setName('Status')
+            .setDesc('Select laser status')
+            .addDropdown(sel => {
+                this.dropdownLaserMovement = sel;
+                sel.addOption('dynamic', 'Dynamic');
+                sel.addOption('static', 'Static');
+                sel.onChange(async (val: string) => {
+                    this.plugin.settings.laserMovement = val;
+
+                    this.plugin.setLaserMovement(val);
+
+                    await this.plugin.saveSettings();
+                }),
+                    sel.setValue(this.plugin.settings.laserMovement);
+            }).addExtraButton((btn) => {
+                btn.setIcon("rotate-ccw");
+                btn.setTooltip("Restore default")
+                btn.onClick(() => {
+                    this.dropdownLaserMovement.setValue(DEFAULT_SETTINGS.laserMovement);
+                    this.plugin.settings.laserMovement = DEFAULT_SETTINGS.laserMovement;
+                    this.plugin.setLaserMovement(this.plugin.settings.laserMovement);
+                    this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName('Focus type')
             .setDesc('Select laser focus type')
             .addDropdown(sel => {
                 this.dropdownLaserType = sel;
@@ -59,8 +87,8 @@ export class LaserBeamSettingTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Laser intensity')
-            .setDesc('Set laser intensity')
+            .setName('Intensity')
+            .setDesc('Set laser intensity (brightness)')
             .addSlider((sli) => {
                 this.sliderIntensity = sli;
                 let slider_val: number;
@@ -70,7 +98,7 @@ export class LaserBeamSettingTab extends PluginSettingTab {
                     slider_val = DEFAULT_SETTINGS.laserIntensity;
                 }
                 sli.setDynamicTooltip();
-                sli.setLimits(0.5, 3, 0.1);
+                sli.setLimits(0.1, 0.8, 0.1);
                 sli.setValue(slider_val);
                 sli.onChange((val: number) => {
 
@@ -89,9 +117,40 @@ export class LaserBeamSettingTab extends PluginSettingTab {
                 });
             });
 
+        new Setting(containerEl)
+            .setName('Line width')
+            .setDesc('Set laser line width')
+            .addSlider((sli) => {
+                this.sliderWidth = sli;
+                let slider_val: number;
+                if (this.plugin.settings.laserWidth) {
+                    slider_val = this.plugin.settings.laserWidth;
+                } else {
+                    slider_val = DEFAULT_SETTINGS.laserWidth;
+                }
+                sli.setDynamicTooltip();
+                sli.setLimits(0.3, 3, 0.1);
+                sli.setValue(slider_val);
+                sli.onChange((val: number) => {
+
+                    this.plugin.settings.laserWidth = val;
+                    this.plugin.setLaserWidth(val);
+                    this.plugin.saveSettings();
+                })
+            }).addExtraButton((btn) => {
+                btn.setIcon("rotate-ccw");
+                btn.setTooltip("Restore default")
+                btn.onClick(() => {
+                    this.sliderWidth.setValue(DEFAULT_SETTINGS.laserWidth);
+                    this.plugin.settings.laserWidth = DEFAULT_SETTINGS.laserWidth;
+                    this.plugin.setLaserWidth(this.plugin.settings.laserWidth);
+                    this.plugin.saveSettings();
+                });
+            });
+
 
         new Setting(containerEl)
-            .setName('Laser color')
+            .setName('Color')
             .setDesc('Select laser color')
 
             .addDropdown(sel => {
@@ -121,7 +180,7 @@ export class LaserBeamSettingTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Laser area size')
+            .setName('Area size')
             .setDesc('Adjust laser area size')
             .addSlider((sli) => {
                 this.sliderArea = sli;
@@ -211,6 +270,7 @@ export class LaserBeamSettingTab extends PluginSettingTab {
                     this.plugin.saveSettings();
                 });
             });
+
 
     }
 }

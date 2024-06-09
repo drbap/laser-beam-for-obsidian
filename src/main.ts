@@ -1,10 +1,12 @@
-import { IconName, Plugin, addIcon } from 'obsidian';
+import { Editor, IconName, MarkdownView, Notice, Plugin, addIcon } from 'obsidian';
 import { LaserBeamSettingTab } from './settings';
 
 interface LaserBeamSettings {
+	isLaserActive: boolean;
+	laserMovement: string;
 	laserType: string;
 	laserColor: string;
-	isLaserActive: boolean;
+	laserWidth: number;
 	laserIntensity: number;
 	laserArea: number;
 	laserMarginLeft: number;
@@ -12,25 +14,32 @@ interface LaserBeamSettings {
 }
 
 export const DEFAULT_SETTINGS: LaserBeamSettings = {
+	isLaserActive: false,
+	laserMovement: 'dynamic',
 	laserType: 'line',
 	laserColor: 'blue',
-	isLaserActive: false,
-	laserIntensity: 1.5,
+	laserWidth: 1.0,
+	laserIntensity: 0.7,
 	laserArea: 82,
 	laserMarginLeft: 0,
 	laserMarginRight: 0
 }
 
 export default class LaserBeamPlugin extends Plugin {
+
 	settings: LaserBeamSettings;
 	public LB_ICON: IconName = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h0"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>';
 	private LB_BODY: HTMLElement;
+	private lbFontSize: string;
+	private cl_editor: Editor;
 
 	async onload() {
 
 		await this.loadSettings();
 		this.LB_BODY = document.body;
 		addIcon('wand-1', this.LB_ICON);
+
+		new Notice("Version 2.1.0");
 
 		if (this.settings.isLaserActive) {
 			this.activateLaser();
@@ -73,10 +82,15 @@ export default class LaserBeamPlugin extends Plugin {
 		this.addSettingTab(new LaserBeamSettingTab(this.app, this));
 
 		this.registerDomEvent(document, 'mousemove', this.throttle((evt: MouseEvent) => {
-			if (this.settings.isLaserActive) {
+			if (this.settings.isLaserActive && this.settings.laserMovement === 'dynamic') {
 				this.setLaserPos(evt);
+			} else {
+				return;
 			}
-		}, 100));
+		}, 50));
+
+		this.registerDomEvent(document, 'keyup', () => { this.getCaretPos(this.LB_BODY); });
+		this.registerDomEvent(document, 'click', () => { this.getCaretPos(this.LB_BODY); });
 
 	}
 
@@ -106,8 +120,10 @@ export default class LaserBeamPlugin extends Plugin {
 	activateLaser() {
 		this.LB_BODY.classList.add('lb-laser-active');
 		this.setLaserType(this.settings.laserType);
+		this.setLaserMovement(this.settings.laserMovement);
 		this.setLaserColor(this.settings.laserColor);
 		this.setLaserIntensity(this.settings.laserIntensity);
+		this.setLaserWidth(this.settings.laserWidth);
 		this.setLaserArea(this.settings.laserArea);
 		this.setLaserMargins(this.settings.laserMarginLeft, this.settings.laserMarginRight);
 		this.settings.isLaserActive = true;
@@ -166,15 +182,15 @@ export default class LaserBeamPlugin extends Plugin {
 
 	setLaserPos(evt: MouseEvent): void {
 
-		let LaserBeamPos;
+		let laserBeamPos;
 
 		if (this.settings.laserType === 'line') {
-			LaserBeamPos = evt.clientY + 16;
+			laserBeamPos = evt.clientY + 16;
 		} else {
-			LaserBeamPos = evt.clientY - this.settings.laserArea / 2;
+			laserBeamPos = evt.clientY - this.settings.laserArea / 2;
 		}
 
-		this.LB_BODY.style.setProperty('--lb-laser-top', LaserBeamPos.toString() + 'px');
+		this.LB_BODY.style.setProperty('--lb-laser-top', laserBeamPos.toString() + 'px');
 	}
 
 	setLaserArea(val: number) {
@@ -183,8 +199,14 @@ export default class LaserBeamPlugin extends Plugin {
 		}
 	}
 
+	setLaserWidth(val: number) {
+		if (val >= 0.3 && val <= 3) {
+			this.LB_BODY.style.setProperty('--lb-laser-width', val.toString());
+		}
+	}
+
 	setLaserIntensity(val: number) {
-		if (val >= 0 && val <= 3) {
+		if (val >= 0.1 && val <= 0.8) {
 			this.LB_BODY.style.setProperty('--lb-laser-intensity', val.toString());
 		}
 	}
@@ -195,6 +217,40 @@ export default class LaserBeamPlugin extends Plugin {
 		}
 		if (val2 >= 0 && val2 <= 500) {
 			this.LB_BODY.style.setProperty('--lb-laser-margin-right', val2.toString() + 'px');
+		}
+	}
+
+	setLaserMovement(val: string) {
+		if (["dynamic", "static"].includes(val)) {
+			this.settings.laserMovement = val;
+		}
+		this.LB_BODY.classList.remove('lb-laser-static');
+		if (val === 'static') {
+			this.LB_BODY.classList.add('lb-laser-static')
+		} else {
+			this.LB_BODY.classList.remove('lb-laser-static');
+		}
+	}
+
+	getCaretPos(el: HTMLElement) {
+		const computedStyle = window.getComputedStyle(this.LB_BODY);
+		this.lbFontSize = computedStyle.getPropertyValue('--font-text-size');
+
+		try {
+			this.cl_editor = this.app.workspace.getActiveViewOfType(MarkdownView)?.editor as Editor;
+
+			// @ts-expect-error
+			const caretPos = this.cl_editor.cm.coordsAtPos(this.cl_editor.posToOffset(this.cl_editor.getCursor()));
+			let pos;
+			if (this.settings.laserType === 'line') {
+				pos = caretPos.bottom + 5;
+				el.style.setProperty('--lb-laser-top', pos.toString() + 'px');
+			} else {
+				pos = caretPos.bottom - parseInt(this.lbFontSize) + 5 - this.settings.laserArea / 2;
+				el.style.setProperty('--lb-laser-top', pos.toString() + 'px');
+			}
+		} catch (e) {
+			return;
 		}
 	}
 
