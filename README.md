@@ -33,9 +33,12 @@
 
 ## Functionality
 
-- **Desktop version**: The laser lines will **follow the mouse cursor**. 
+**Desktop version**:
+- The laser lines will **follow the mouse cursor** (**dynamic** status - default).
+- You can select **static** status to have a fixed laser position.
+- The laser lines will **follow the text cursor** (**caret**).
 
-- **Mobile devices**: Touch the screen to select the desired laser line location.
+**Mobile devices**: Touch the screen to select the desired laser line location.
 
 
 ## Command Palette
