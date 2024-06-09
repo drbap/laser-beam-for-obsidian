@@ -1,7 +1,7 @@
 {
 	"id": "laser-beam",
 	"name": "Laser beam",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"minAppVersion": "1.1.0",
 	"description": "Improve your reading experience with customizable laser lines.",
 	"author": "Bernardo Pires",

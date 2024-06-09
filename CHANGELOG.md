@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.1] - 2024-06-08
+### Fixes
+
+- Removed version number notice when loading the plugin.
+
 ## [2.1.0] - 2024-06-08
 ### Improvements
 
