@@ -3,10 +3,11 @@ MIT License (c) Bernardo Pires (@drbap)
 */
 body {
 	--lb-laser-top: 0;
-	--lb-laser-intensity: 1.5;
+	--lb-laser-width: 1.0;
 	--lb-laser-area: 82px;
 	--lb-laser-margin-left: 0;
 	--lb-laser-margin-right: 0;
+	--lb-laser-intensity: 0.7;
 }
 
 /* Laser */
@@ -16,30 +17,34 @@ body.lb-laser-active::before {
 	right: var(--lb-laser-margin-right);
 	position: fixed;
 	z-index: 2000;
-	opacity: .8;
+	opacity: var(--lb-laser-intensity);
 	width: auto;
 	height: auto;
 	mix-blend-mode: normal;
 	pointer-events: none;
 	will-change: transform;
-	transition: transform 0.2s;
 	animation-name: show-laser;
 	animation-duration: 0.2s;
 	animation-iteration-count: 1;
 }
 
+body.lb-laser-active.lb-laser-static::before {
+	pointer-events: none;
+	transition: none;
+}
+
 body.lb-laser-active.lb-laser-type-line::before {
-	height: 2px;
-	box-shadow: 0 0 8px 2px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 22px) 2px var(--lb-laser-color-glow);
+	height: 3px;
+	box-shadow: 0 0 8px 2px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-width) * 22px) 2px var(--lb-laser-color-glow);
 	background-color: var(--lb-laser-color-bg);
 	border-radius: 24px;
-	transform: translateY(var(--lb-laser-top)) scaleY(var(--lb-laser-intensity));
+	transform: translateY(var(--lb-laser-top)) scaleY(var(--lb-laser-width));
 }
 
 body.lb-laser-active.lb-laser-type-area::before {
 	height: var(--lb-laser-area);
-	box-shadow: inset 0 0 10px 1px var(--lb-laser-color-glow), 0 0 4px 1px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-intensity) * 12px) 1px var(--lb-laser-color-glow);
-	border: calc(var(--lb-laser-intensity) * 1px) solid var(--lb-laser-color-bg);
+	box-shadow: inset 0 0 10px 1px var(--lb-laser-color-glow), 0 0 4px 1px var(--lb-laser-color-glow), 0 0 calc(var(--lb-laser-width) * 12px) 1px var(--lb-laser-color-glow);
+	border: calc(var(--lb-laser-width) * 1px) solid var(--lb-laser-color-bg);
 	background-color: transparent;
 	border-radius: 0;
 	transform: translateY(var(--lb-laser-top));
