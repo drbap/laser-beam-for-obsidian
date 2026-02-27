@@ -1,5 +1,15 @@
 # Laser beam plugin for Obsidian
 
+> [!Note]
+> 
+> **The Laser Beam plugin for Obsidian is officially archived and no longer under active development.**
+> 
+> **A Note from the Developer:**
+> 
+> _Maintaining free and open-source projects requires a sustainable amount of time and effort; community engagement is also very important. This project has reached a stable plateau, and I have decided to shift my focus toward other projects._
+>
+> _The plugin remains fully functional with Obsidian >= v1.11, but I will no longer be providing updates or bug fixes. Thanks to those who found it useful over the years._
+
 ![Laser beam plugin](images/laser_beam_plugin_intro.png)
 
 **Laser beam** is a plugin for Obsidian.md designed to enhance your reading experience by utilizing customizable laser lines.  These lines are virtual guides meant to improve reading focus and concentration.
